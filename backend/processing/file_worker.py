@@ -126,5 +126,6 @@ def process_document(doc_id: str, text: str, settings: Settings) -> Dict:
             "weighted_accuracy": weighted_accuracy,
             "grammar_enabled": grammar_enabled,
         },
+        "content": text,
         "error": None,
     }

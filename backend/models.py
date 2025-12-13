@@ -39,6 +39,7 @@ class FileResult(BaseModel):
     tokens: List[Token]
     issues: List[Issue]
     stats: dict
+    content: Optional[str] = None
     error: Optional[str] = None
 
 
