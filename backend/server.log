@@ -1,0 +1,15 @@
+INFO:     Started server process [90953]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8002 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53774 - "POST /analyze-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53798 - "POST /analyze-files HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53805 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53805 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53805 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53805 - "GET /openapi.json HTTP/1.1" 200 OK
+LanguageTool initialization failed (path=/Users/mac/Desktop/PDC Project/backend/data/LanguageTool-6.6): unsupported language: 'theree is some errs in text'
+INFO:     127.0.0.1:53806 - "POST /analyze HTTP/1.1" 200 OK
+LanguageTool initialization failed (path=/Users/mac/Desktop/PDC Project/backend/data/LanguageTool-6.6): unsupported language: 'theree is some errs in text'
+INFO:     127.0.0.1:53818 - "POST /analyze HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53835 - "POST /analyze HTTP/1.1" 200 OK

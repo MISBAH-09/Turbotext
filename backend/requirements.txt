@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+# Optional but recommended to improve spell-check quality when no dictionary file is provided
+wordfreq
+# Optional for grammar checking; otherwise only spelling runs
+language-tool-python
+# Optional for DOCX extraction
+python-docx

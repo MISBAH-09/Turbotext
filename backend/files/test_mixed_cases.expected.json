@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "id": "test_mixed_cases.txt",
+      "spelling_issues": 2,
+      "grammar_issues": 7,
+      "issues": [
+        {
+          "type": "grammar",
+          "message": "Use a plural verb with a plural subject.",
+          "original": "was",
+          "suggestions": ["were"],
+          "position": {"start": 5, "end": 8, "line": 1, "col": 6}
+        },
+        {
+          "type": "spelling",
+          "message": "Possible misspelling",
+          "original": "zooo",
+          "suggestions": ["zoo"],
+          "position": {"start": 20, "end": 24, "line": 1, "col": 21}
+        },
+        {
+          "type": "grammar",
+          "message": "Use the third-person singular verb with a singular subject.",
+          "original": "run",
+          "suggestions": ["runs", "runed"],
+          "position": {"start": 30, "end": 33, "line": 2, "col": 5}
+        },
+        {
+          "type": "grammar",
+          "message": "Add an article before the noun.",
+          "original": "zoo",
+          "suggestions": ["the zoo"],
+          "position": {"start": 37, "end": 40, "line": 2, "col": 12}
+        },
+        {
+          "type": "grammar",
+          "message": "Use a plural verb after a compound subject.",
+          "original": "is",
+          "suggestions": ["are"],
+          "position": {"start": 56, "end": 58, "line": 3, "col": 15}
+        },
+        {
+          "type": "grammar",
+          "message": "Add an article before the noun.",
+          "original": "zoo",
+          "suggestions": ["the zoo"],
+          "position": {"start": 79, "end": 82, "line": 4, "col": 12}
+        },
+        {
+          "type": "grammar",
+          "message": "Use the singular form for this mass noun.",
+          "original": "homeworks",
+          "suggestions": ["homework"],
+          "position": {"start": 91, "end": 99, "line": 4, "col": 24}
+        },
+        {
+          "type": "spelling",
+          "message": "Possible misspelling",
+          "original": "Tommorrrow",
+          "suggestions": ["tomorrow"],
+          "position": {"start": 102, "end": 112, "line": 5, "col": 1}
+        },
+        {
+          "type": "grammar",
+          "message": "Use the correct past tense form.",
+          "original": "Runned",
+          "suggestions": ["ran"],
+          "position": {"start": 135, "end": 141, "line": 6, "col": 1}
+        }
+      ],
+      "notes": "Expected output assumes LanguageTool grammar checks disabled or not adding extra issues; only built-in spelling + rule-based grammar are counted."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+File: test_mixed_cases.txt
+Word count: 28
+Spelling issues: 0 (0.00%)
+Grammar issues: 9 (32.14%)
+Overall accuracy: 67.86%
+
+Issues:
+  1. [grammar] Use a third-person plural verb with ‘they’. (was) Suggestions: are, were
+  2. [grammar] Possible spelling mistake found. (zooo) Suggestions: zoo, zoom, zoos, zoot, OOO
+  3. [grammar] The pronoun ‘She’ is usually used with a third-person or a past tense verb. (run) Suggestions: runs, ran
+  4. [grammar] Add an article before the noun. (zoo) Suggestions: the zoo
+  5. [grammar] Use a plural verb after a compound subject. (is) Suggestions: are
+  6. [grammar] Add an article before the noun. (zoo) Suggestions: the zoo
+  7. [grammar] Use the singular form for this mass noun. (homeworks) Suggestions: homework
+  8. [grammar] Possible spelling mistake found. (Tommorrrow) Suggestions: Tomorrow
+  9. [grammar] Possible spelling mistake found. (Runned) Suggestions: Runner, Ruined, Gunned, Punned, Runnel
