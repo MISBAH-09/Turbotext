@@ -1,0 +1,11 @@
+This is a smple txt file to test grammer and speling cheking tool.
+
+Their is many error in this document which is made on purpose. The goal are to see how good the tool can detect mistake and suggest correction.
+
+I has wrote this paragraph very quickly so it dont follow proper rules. Some sentence is too long and some are not complete
+
+For example missing punctuation missing commas missing periods and wrong capital letters. also some word are repeat repeat.
+
+The tool should also detect context error like using wrong word such as accept instead of except or there instead of their.
+
+In conclusion this file are useful for testing. hope it help you test you system properly

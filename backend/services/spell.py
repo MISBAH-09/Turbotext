@@ -12,6 +12,81 @@ except Exception:  # pragma: no cover - optional dependency
     zipf_frequency = None  # type: ignore
 
 
+# Domain expansion: academic, mental health, tech, common compounds (US/UK variants).
+EXTRA_WORDS = {
+    "long-term",
+    "short-term",
+    "face-to-face",
+    "well-being",
+    "burnout",
+    "burn-out",
+    "overdependence",
+    "over-dependence",
+    "overdependence",
+    "e-learning",
+    "self-esteem",
+    "prefrontal",
+    "executive-function",
+    "attention-span",
+    "sleep-deprived",
+    "sleep-deprivation",
+    "hyperactivity",
+    "adhd",
+    "anxiety",
+    "depression",
+    "cognition",
+    "cognitive",
+    "neural",
+    "neuroscience",
+    "dopamine",
+    "serotonin",
+    "oxytocin",
+    "prefrontal-cortex",
+    "hippocampus",
+    "neurotransmitter",
+    "neurotransmitters",
+    "evidence-based",
+    "peer-reviewed",
+    "meta-analysis",
+    "randomized",
+    "randomised",
+    "placebo",
+    "placebo-controlled",
+    "double-blind",
+    "socioeconomic",
+    "wellbeing",
+    "well-being",
+    "well being",
+    "real-time",
+    "part-time",
+    "full-time",
+    "longstanding",
+    "self-regulation",
+    "self-control",
+    "self-report",
+    "self-reported",
+    "co-occurring",
+    "coexisting",
+    "baseline",
+    "posttest",
+    "post-test",
+    "pretest",
+    "pre-test",
+    "ecommerce",
+    "e-commerce",
+    "cybersecurity",
+    "cyber-security",
+    "multitask",
+    "multitasking",
+    "multitasker",
+    "internet-based",
+    "online",
+    "offline",
+    "wellbeing",
+    "wellness",
+}
+
+
 def damerau_levenshtein(a: str, b: str) -> int:
     """Compute Damerau-Levenshtein distance (case-insensitive)."""
     a = a.lower()
@@ -96,10 +171,14 @@ def load_dictionary(dictionary_path: str) -> Tuple[Sequence[str], Dict[str, int]
     if path.exists():
         data = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(data, dict):
-            return list(data.keys()), {k.lower(): int(v) for k, v in data.items()}
+            words = list(data.keys())
+            freq = {k.lower(): int(v) for k, v in data.items()}
         if isinstance(data, list):
-            return data, {w.lower(): 1 for w in data}
-        raise ValueError("Dictionary JSON must be a list or object")
+            words = data
+            freq = {w.lower(): 1 for w in data}
+        else:
+            raise ValueError("Dictionary JSON must be a list or object")
+        return words, freq
 
     # Dictionary file missing — try wordfreq for a robust built-in lexicon.
     if top_n_list and zipf_frequency:
@@ -134,10 +213,10 @@ class SpellChecker:
         word_lower = word.lower().strip(".,!?;:'\"")
         if not word_lower:
             return []
-        
+
         candidates = self.tree.search(word_lower, self.max_distance)
 
-        # Sort by: distance, frequency, alphabetical
+        # Sort by: distance, frequency, length, alphabetical
         candidates.sort(
             key=lambda x: (
                 x[1],                          # smaller distance better
@@ -146,14 +225,23 @@ class SpellChecker:
                 x[0]                           # alphabetical tie-breaker
             )
         )
-        return [term for term, _ in candidates[:limit]]
+
+        out = [term for term, _ in candidates[:limit]]
+        # Preserve casing style of the input for the top suggestion set.
+        if word[:1].isupper():
+            out = [s.capitalize() for s in out]
+        return out
 
 
 @lru_cache(maxsize=4)
 def get_spell_checker(dictionary_path: str, max_distance: int = 2) -> SpellChecker:
     """Load a SpellChecker instance from a JSON dictionary file."""
     words, freq = load_dictionary(dictionary_path)
-    return SpellChecker(words, freq, max_distance=max_distance)
+    # Expand dictionary with domain/compound words; keep simple frequency boost.
+    expanded_words = list(words) + list(EXTRA_WORDS)
+    for w in EXTRA_WORDS:
+        freq.setdefault(w.lower(), 10)
+    return SpellChecker(expanded_words, freq, max_distance=max_distance)
 
 
 # import json

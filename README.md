@@ -13,9 +13,10 @@ Unified setup for the TurboText FastAPI backend and React frontend.
   - `API_PORT` (default 8000), `APP_PORT` (default 3000)
   - `PROCESS_WORKERS`, `THREAD_WORKERS`, `CHUNK_SIZE`, `CHUNK_OVERLAP`
   - `LANGUAGE`, `DICTIONARY_PATH`, `LANGUAGE_TOOL_PATH`
+  - `DISABLE_GRAMMAR` (set to `1` to skip grammar checks for speed)
 
 ## One-shot dev start
-From the repo root:
+From the repo root (macOS/Linux):
 ```bash
 # first-time setup: ensure deps are installed
 (cd backend && ./run_backend.sh --help >/dev/null 2>&1 || true)
@@ -28,6 +29,18 @@ From the repo root:
 - Frontend: http://localhost:3000 (change with `APP_PORT=3001 ./run_app.sh`)
 
 The launcher auto-wires `REACT_APP_API_BASE_URL` for the frontend.
+
+On Windows (PowerShell):
+```powershell
+.\run_app.ps1
+# override ports, etc.
+$env:API_PORT=8001; $env:APP_PORT=3001; .\run_app.ps1
+```
+The PowerShell script:
+- loads `config.env`
+- ensures backend venv + deps, frontend deps
+- picks free ports near defaults
+- starts backend, waits for health, then starts frontend
 
 ## Manual starts
 - Backend: `cd backend && ./run_backend.sh` (or `PORT=8001 ./run_backend.sh`)

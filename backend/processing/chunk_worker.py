@@ -5,6 +5,20 @@ from backend.services.grammar import check_text
 from backend.services.spell import SpellChecker
 
 WORD_RE = re.compile(r"[A-Za-z][A-Za-z'-]*")
+HYPHEN_WHITELIST = {
+    "long-term",
+    "short-term",
+    "face-to-face",
+    "well-being",
+    "burnout",
+    "burn-out",
+    "e-learning",
+    "self-esteem",
+    "real-time",
+    "part-time",
+    "full-time",
+    "wellbeing",
+}
 COMMON_MISSPELLINGS = {
     "buss": ["bus"],
     "tommorrrow": ["tomorrow"],
@@ -51,6 +65,7 @@ def _make_issue(
     line, col = offset_to_position(start, line_offsets)
     return {
         "type": "grammar",
+        "severity": "error",
         "message": message,
         "original": original,
         "suggestions": suggestions,
@@ -139,6 +154,9 @@ def analyze_chunk(
         token_spans.append((word, abs_start, abs_end))
         lower_word = word.lower()
 
+        if lower_word in HYPHEN_WHITELIST:
+            continue
+
         if lower_word in COMMON_MISSPELLINGS:
             suggestions = COMMON_MISSPELLINGS[lower_word]
         elif not spell_checker.is_correct(word):
@@ -150,6 +168,7 @@ def analyze_chunk(
         issues.append(
             {
                 "type": "spelling",
+                "severity": "error",
                 "message": "Possible misspelling",
                 "original": word,
                 "suggestions": suggestions,
@@ -178,6 +197,7 @@ def analyze_chunk(
             except Exception:
                 category_id = ""
             issue_type = "spelling" if ("MORFOLOGIK" in rule_id or "SPELL" in rule_id or category_id == "TYPOS") else "grammar"
+            severity = "suggestion" if issue_type == "grammar" and category_id in {"STYLE", "TYPOGRAPHY"} else "error"
             repls = getattr(match, "replacements", [])
             if repls and hasattr(repls[0], "value"):
                 suggestions = [r.value for r in repls][:5]
@@ -190,6 +210,7 @@ def analyze_chunk(
                     "message": match.message,
                     "original": original,
                     "suggestions": suggestions,
+                    "severity": severity,
                     "position": {
                         "start": abs_start,
                         "end": abs_end,

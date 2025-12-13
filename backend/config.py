@@ -15,8 +15,9 @@ class Settings:
     chunk_overlap: int = int(os.environ.get("CHUNK_OVERLAP", "128"))
     process_workers: int = int(os.environ.get("PROCESS_WORKERS", "0"))  # 0 → auto
     thread_workers: int = int(os.environ.get("THREAD_WORKERS", "0"))  # 0 → auto
-    max_files: int = int(os.environ.get("MAX_FILES", "16"))
+    max_files: int = int(os.environ.get("MAX_FILES", "1000"))
     max_file_bytes: int = int(os.environ.get("MAX_FILE_BYTES", str(5 * 1024 * 1024)))  # 5MB
+    disable_grammar: bool = os.environ.get("DISABLE_GRAMMAR", "0") == "1"
 
 
 def load_settings() -> Settings:

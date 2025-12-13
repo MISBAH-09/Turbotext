@@ -1,0 +1,24 @@
+File: test.txt
+Word count: 119
+Spelling issues: 5 (4.20%)
+Grammar issues: 12 (10.08%)
+Overall accuracy: 85.71%
+
+Issues:
+  1. [spelling] Possible spelling mistake found. (smple) Suggestions: simple, sample, ample, smile, Siple
+  2. [spelling] Possible spelling mistake found. (txt) Suggestions: TXT, text, TNT, TT, tat
+  3. [spelling] Possible spelling mistake found. (grammer) Suggestions: grammar, grimmer, rammer, crammer, g rammer
+  4. [spelling] Possible misspelling (speling) Suggestions: spelling, spewing, feeling, seeing, opening
+  5. [spelling] Possible spelling mistake found. (cheking) Suggestions: checking, chewing, choking, Chekiang, cheeking
+  6. [grammar] Did you mean “there”? (Their) Suggestions: There
+  7. [grammar] Possible agreement error. The noun ‘error’ seems to be countable; consider using: “many errors”. (many error) Suggestions: many errors
+  8. [grammar] Possible agreement error — use the base form here. (has) Suggestions: have
+  9. [grammar] It appears that the past participle should be used here. (wrote) Suggestions: written
+  10. [grammar] Use "doesn't" for third-person singular. (dont) Suggestions: doesn't
+  11. [grammar] This sentence does not start with an uppercase letter. (also) Suggestions: Also
+  12. [grammar] It appears that the noun or verb are incorrect. (word are) Suggestions: words are, word is
+  13. [grammar] Possible typo: you repeated a word. (repeat repeat) Suggestions: repeat
+  14. [grammar] The verb ‘are’ is plural. Did you mean: “is”? Did you use a verb instead of a noun? (are) Suggestions: is
+  15. [grammar] This sentence does not start with an uppercase letter. (hope) Suggestions: Hope
+  16. [grammar] After ‘it’, use the third-person verb form “helps”. (help) Suggestions: helps
+  17. [grammar] Did you mean “your”? (you) Suggestions: your

@@ -1,0 +1,16 @@
+File: In recent years.docx
+Word count: 343
+Spelling issues: 6 (1.75%)
+Grammar issues: 3 (0.87%)
+Overall accuracy: 97.38%
+
+Issues:
+  1. [spelling] Possible misspelling (long-term) Suggestions: longterm
+  2. [grammar] After ‘it’, use the third-person verb form “creates”. (create) Suggestions: creates
+  3. [spelling] Possible spelling mistake found. (belive) Suggestions: believe
+  4. [spelling] Possible misspelling (face-to-face)
+  5. [grammar] You should probably use “argue”. (argues) Suggestions: argue
+  6. [spelling] Possible misspelling (Overdependence)
+  7. [spelling] Possible misspelling (experiance) Suggestions: experience, experienced, experiences
+  8. [grammar] Use a plural verb after a compound subject. (is) Suggestions: are
+  9. [spelling] Possible misspelling (well-being) Suggestions: wellbeing

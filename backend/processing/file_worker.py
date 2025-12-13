@@ -68,10 +68,12 @@ def collect_tokens(text: str, line_offsets: List[int]) -> List[Dict]:
 
 def process_document(doc_id: str, text: str, settings: Settings) -> Dict:
     spell_checker = get_spell_checker(settings.dictionary_path)
+    grammar_enabled = not settings.disable_grammar
     try:
-        grammar_tool = get_language_tool(settings.language, path=settings.language_tool_path)
+        grammar_tool = get_language_tool(settings.language, path=settings.language_tool_path) if grammar_enabled else None
     except GrammarNotAvailable:
         grammar_tool = None
+        grammar_enabled = False
 
     started = time.time()
     line_offsets = compute_line_offsets(text)
@@ -95,6 +97,18 @@ def process_document(doc_id: str, text: str, settings: Settings) -> Dict:
 
     issues = deduplicate_issues(issues)
     duration_ms = int((time.time() - started) * 1000)
+    severity_counts = {"error": 0, "suggestion": 0}
+    for i in issues:
+        sev = i.get("severity", "error")
+        if sev not in severity_counts:
+            severity_counts["suggestion"] += 1
+        else:
+            severity_counts[sev] += 1
+    weighted_errors = severity_counts["error"] + 0.3 * severity_counts["suggestion"]
+    weighted_accuracy = 100.0
+    if tokens:
+        weighted_accuracy = max(0.0, 100.0 - (weighted_errors / len(tokens)) * 100.0)
+
     return {
         "id": doc_id,
         "tokens": tokens,
@@ -107,6 +121,10 @@ def process_document(doc_id: str, text: str, settings: Settings) -> Dict:
             "word_count": len(tokens),
             "spelling_issues": sum(1 for i in issues if i["type"] == "spelling"),
             "grammar_issues": sum(1 for i in issues if i["type"] == "grammar"),
+            "severity_counts": severity_counts,
+            "weighted_errors": weighted_errors,
+            "weighted_accuracy": weighted_accuracy,
+            "grammar_enabled": grammar_enabled,
         },
         "error": None,
     }

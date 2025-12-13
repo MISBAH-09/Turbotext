@@ -3,6 +3,13 @@ $ErrorActionPreference = "Stop"
 # One-click starter for Windows PowerShell: creates venv, checks LanguageTool jar, runs uvicorn.
 
 function Get-Python {
+    if ($env:PYTHON_PATH) {
+        if (Test-Path $env:PYTHON_PATH) {
+            return $env:PYTHON_PATH
+        }
+        throw "PYTHON_PATH is set to '$env:PYTHON_PATH' but that file does not exist."
+    }
+
     foreach ($cmd in @("py -3", "python3", "python")) {
         try {
             $resolved = (Get-Command $cmd.Split()[0] -ErrorAction Stop).Source
@@ -19,11 +26,16 @@ $ProjectRoot = Split-Path -Parent $ScriptDir
 $VenvDir = Join-Path $ScriptDir ".venv"
 $PythonCmd = Get-Python
 
-# Prefer bundled LanguageTool unless overridden by env.
+# Prefer bundled LanguageTool unless overridden by env; fall back if env path is invalid.
+$defaultLtPath = Join-Path $ScriptDir "data/LanguageTool-6.6"
 if (-not $env:LANGUAGE_TOOL_PATH) {
-    $env:LANGUAGE_TOOL_PATH = Join-Path $ScriptDir "data/LanguageTool-6.6"
+    $env:LANGUAGE_TOOL_PATH = $defaultLtPath
 }
 $ltJar = Join-Path $env:LANGUAGE_TOOL_PATH "languagetool.jar"
+if (-not (Test-Path $ltJar)) {
+    $env:LANGUAGE_TOOL_PATH = $defaultLtPath
+    $ltJar = Join-Path $env:LANGUAGE_TOOL_PATH "languagetool.jar"
+}
 if (-not (Test-Path $ltJar)) {
     throw "LanguageTool jar not found at '$ltJar'. Extract LanguageTool to that folder or set LANGUAGE_TOOL_PATH."
 }
