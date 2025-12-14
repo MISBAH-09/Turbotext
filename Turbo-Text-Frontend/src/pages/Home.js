@@ -5,14 +5,13 @@ import FileList from "../components/FileList";
 import AnalyzeButton from "../components/AnalyzeButton";
 import DocumentViewer from "./DocumentViewer";
 import DragDropUploader from "../components/DragDropUploader";
-import Logo from "../components/Logo";
-import Typewriter from "typewriter-effect"; // Import Typewriter
+import Typewriter from "typewriter-effect";
 import AnalysisResults from "../components/AnalysisResults";
 import { analyzeFiles, fetchFileContent } from "../services/analyzeService";
 import IssueEditor from "../components/IssueEditor";
 
 const quickHighlights = [
-  { title: "Documents", subtitle: "PDF, DOCX, TXT", icon: "📄" },
+  { title: "Documents", subtitle: "DOCX, TXT", icon: "📄" }, // PDF Removed
   { title: "OCR", subtitle: "JPG, PNG", icon: "🔍" },
   { title: "Parallel", subtitle: "Multiple files", icon: "⚡" },
 ];
@@ -22,14 +21,7 @@ const featureCards = [
     title: "Smart OCR",
     body: "Extract text from images with high accuracy using advanced optical character recognition.",
     icon: (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M3 5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
         <path d="M8 12h5" />
         <path d="M8 16h3" />
@@ -40,14 +32,7 @@ const featureCards = [
     title: "Grammar Check",
     body: "Catch grammatical errors, punctuation issues, and sentence structure problems instantly.",
     icon: (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M3 4h18" />
         <path d="M5 8h14" />
         <path d="M7 12h10" />
@@ -59,14 +44,7 @@ const featureCards = [
     title: "Parallel Processing",
     body: "Analyze multiple files simultaneously for maximum efficiency and speed.",
     icon: (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M4 4h6v6H4z" />
         <path d="M14 4h6v6h-6z" />
         <path d="M4 14h6v6H4z" />
@@ -78,14 +56,7 @@ const featureCards = [
     title: "Secure & Private",
     body: "Your documents are processed securely and never stored on our servers.",
     icon: (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M6 11V8a6 6 0 0 1 12 0v3" />
         <rect x="4" y="11" width="16" height="10" rx="2" />
       </svg>
@@ -95,14 +66,7 @@ const featureCards = [
     title: "Detailed Reports",
     body: "Get comprehensive analysis with actionable suggestions for improvement.",
     icon: (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M5 3h14v18H5z" />
         <path d="M9 7h6" />
         <path d="M9 12h6" />
@@ -114,14 +78,7 @@ const featureCards = [
     title: "Instant Results",
     body: "Get analysis results in seconds with our optimized processing engine.",
     icon: (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M12 2v4" />
         <path d="M12 18v4" />
         <path d="M4.93 4.93 7.76 7.76" />
@@ -233,7 +190,6 @@ const Home = () => {
     <div className="page-shell">
       <header className="top-nav">
         <div className="brand">
-          <Logo className={`nav-logo ${isAnalyzing ? "processing" : ""}`} />
           <span className="brand-name">TurboTxt</span>
         </div>
         <div className="nav-actions">
@@ -254,7 +210,7 @@ const Home = () => {
 
       <main className="content-shell">
         <section className="hero" id="hero">
-          <p className="hero-kicker">Upload PDFs, DOCX files, or images.</p>
+          <p className="hero-kicker">Upload DOCX files or images.</p> {/* PDF Removed */}
           <h1 className="hero-title">
             Instant{" "}
             <span className="typewriter-word">
@@ -273,7 +229,7 @@ const Home = () => {
             for your documents
           </h1>
           <p className="hero-subtext">
-            Upload PDFs, DOCX files, or images. Get instant spell checking,
+            Upload DOCX files or images. Get instant spell checking, {/* PDF Removed */}
             grammar analysis, and OCR extraction.
           </p>
           <div className="hero-actions">
@@ -315,37 +271,19 @@ const Home = () => {
           <div className="upload-card-grid">
             <div className="upload-card">
               <div className="upload-icon doc" aria-hidden="true">
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                >
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                   <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
                   <path d="M14 3v6h6" />
                 </svg>
               </div>
               <h3>Documents</h3>
-              <p className="upload-desc">PDF, DOCX, TXT</p>
-              <DragDropUploader onFilesAdded={handleFilesSelected}>
-                <FileUploader onFilesSelected={handleFilesSelected} />
-              </DragDropUploader>
-
-              <p className="upload-hint">Drag & drop or click</p>
+              <p className="upload-desc">DOCX, TXT</p> {/* PDF Removed */}
+              <DragDropUploader onFilesAdded={handleFilesSelected} />
             </div>
 
             <div className="upload-card">
               <div className="upload-icon img" aria-hidden="true">
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                >
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
                   <rect x="3" y="3" width="18" height="18" rx="2" />
                   <circle cx="9" cy="9" r="2" />
                   <path d="M21 15l-4-4a1 1 0 0 0-1.6.2L11 18" />
@@ -353,12 +291,14 @@ const Home = () => {
               </div>
               <h3>Images</h3>
               <p className="upload-desc">JPG, PNG for OCR</p>
-              <OCRUploader
-                onOCRFileReady={(ocrFile) =>
-                  setFiles((prev) => [...prev, ocrFile])
-                }
-              />
-              <p className="upload-hint">Drag & drop or click</p>
+              
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '320px', width: '100%' }}>
+                 <OCRUploader
+                  onOCRFileReady={(ocrFile) =>
+                    setFiles((prev) => [...prev, ocrFile])
+                  }
+                />
+              </div>
             </div>
           </div>
 
@@ -396,8 +336,15 @@ const Home = () => {
             Everything you need to perfect your text, all in one place.
           </p>
           <div className="feature-grid">
-            {featureCards.map((card) => (
-              <div className="feature-card" key={card.title}>
+            {featureCards.map((card, index) => (
+              <div 
+                className="feature-card" 
+                key={card.title}
+                style={{ 
+                  opacity: 0, 
+                  animation: `slideUp 0.6s ease-out forwards ${index * 0.1}s`
+                }}
+              >
                 <div className="feature-icon">{card.icon}</div>
                 <h3>{card.title}</h3>
                 <p>{card.body}</p>
@@ -407,12 +354,46 @@ const Home = () => {
         </section>
       </main>
 
-      <footer className="footer">
-        <div className="footer-brand">
-          <Logo className="footer-logo" />
-          <span className="brand-name">TurboTxt</span>
+      <footer className="footer" style={{ display: 'block', paddingTop: '60px', paddingBottom: '40px' }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+          gap: '40px', 
+          maxWidth: '1100px', 
+          margin: '0 auto', 
+          paddingBottom: '40px',
+          borderBottom: '1px solid #222'
+        }}>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <span className="brand-name" style={{ fontSize: '1.4rem' }}>TurboTxt</span>
+            <p style={{ color: '#888', fontSize: '0.9rem', lineHeight: '1.6' }}>
+              The fastest way to analyze, correct, and digitize your documents securely in the cloud.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <h4 style={{ color: '#fff', fontSize: '0.95rem' }}>Product</h4>
+            <a href="#features" style={{ color: '#888', textDecoration: 'none', fontSize: '0.9rem' }}>Features</a>
+            <a href="#analyze" style={{ color: '#888', textDecoration: 'none', fontSize: '0.9rem' }}>OCR Analysis</a>
+            <a href="#" style={{ color: '#888', textDecoration: 'none', fontSize: '0.9rem' }}>Pricing</a>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <h4 style={{ color: '#fff', fontSize: '0.95rem' }}>Legal</h4>
+            <a href="#" style={{ color: '#888', textDecoration: 'none', fontSize: '0.9rem' }}>Privacy Policy</a>
+            <a href="#" style={{ color: '#888', textDecoration: 'none', fontSize: '0.9rem' }}>Terms of Service</a>
+          </div>
         </div>
-        <div className="footer-copy">© 2025 TurboTxt. All rights reserved.</div>
+
+        <div style={{ 
+          textAlign: 'center', 
+          paddingTop: '30px', 
+          color: '#444', 
+          fontSize: '0.85rem' 
+        }}>
+          © 2025 TurboTxt Inc. All rights reserved.
+        </div>
       </footer>
 
       {viewerFile && (

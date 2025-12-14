@@ -5,9 +5,6 @@ const Logo = ({ className, style }) => {
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      // CHANGED: Adjusted viewBox to zoom out slightly (approx 25% smaller content)
-      // Previous: "0 230 625 200"
-      // New: "-78 205 781 250" (Adds padding/zooms out)
       viewBox="-78 205 781 350"
       className={className}
       style={style}

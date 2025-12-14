@@ -16,201 +16,19 @@
   padding: 0;
 }
 
+/* --- LUXURY POLISH: Custom Selection --- */
+::selection {
+  background: rgba(227, 92, 58, 0.3); /* Transparent Orange */
+  color: #fff;
+  text-shadow: 0 0 10px rgba(227, 92, 58, 0.5);
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
-  /* Premium Ambient Background */
-  background-image: radial-gradient(circle at 50% -10%, rgba(227, 92, 58, 0.18) 0%, #050505 55%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   min-height: 100vh;
-}
-
-/* Global Container */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 60px 20px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* --- Header Section & Animations --- */
-.header {
-  text-align: center;
-  margin-bottom: 60px;
-  animation: fadeIn 1s ease-out;
-}
-
-.logo-container {
-  position: relative;
-  display: inline-block;
-  /* Floating Animation */
-  animation: float 6s ease-in-out infinite; 
-}
-
-/* Logo Glow Effect - BIG Version */
-.logo-container::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 250px; /* Large Glow Size */
-  height: 250px;
-  background: var(--primary-maroon);
-  filter: blur(80px);
-  opacity: 0.25;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  /* Pulsing Glow Animation */
-  animation: pulse-glow 3s infinite alternate;
-}
-
-.logo {
-  height: 135px; /* EXTRA LARGE LOGO */
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
-
-.tagline {
-  color: var(--text-secondary);
-  font-size: 1.25rem;
-  letter-spacing: 0.5px;
-  margin-top: -35px;
- 
-}
-
-/* --- Layout Grid --- */
-.upload-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  margin-bottom: 50px;
-  margin-top: -20px;
-}
-
-@media (min-width: 900px) {
-  .upload-grid {
-    grid-template-columns: 1.8fr 1fr; /* Hero takes more space */
-  }
-}
-
-/* --- Card Styling & Slide Animations --- */
-.card {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 32px;
-  transition: all 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  /* Entry Animation */
-  opacity: 0; 
-  animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-.card:hover {
-  border-color: #444;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  transform: translateY(-5px);
-}
-
-.card-header {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  color: #555;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* --- Keyframe Definitions --- */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-@keyframes pulse-glow {
-  0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.2); }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* --- Utility Classes --- */
-.spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 0.8s linear infinite;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-.file-input-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 14px;
-  background-color: var(--bg-hover);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: all 0.2s;
-  width: 100%;
-  gap: 10px;
-}
-
-.file-input-label:hover {
-  border-color: var(--primary-maroon);
-  color: #fff;
-  background-color: #2a2a2a;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #444;
 }
 
 /* --- New Landing Layout --- */
@@ -218,7 +36,43 @@ input[type="file"] {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at 50% 0%, rgba(227, 92, 58, 0.1), rgba(12, 12, 12, 0.9) 42%), var(--bg-dark);
+  background: var(--bg-dark);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* FIXED GLOW: Positioned at top edge to flow out of header */
+.page-shell::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90vh;
+  background: radial-gradient(
+    circle at 50% 0%, 
+    rgba(227, 92, 58, 0.22) 0%, 
+    rgba(227, 92, 58, 0.08) 35%, 
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+
+/* TEXTURE: Film grain overlay */
+.page-shell::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04; 
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
 }
 
 .content-shell {
@@ -227,8 +81,11 @@ input[type="file"] {
   margin: 0 auto;
   padding: 36px 22px 96px;
   flex: 1 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
+/* --- Header & Nav --- */
 .top-nav {
   position: sticky;
   top: 0;
@@ -237,32 +94,40 @@ input[type="file"] {
   justify-content: space-between;
   align-items: center;
   padding: 16px 28px;
-  background: rgba(9, 9, 9, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-color);
+  background: rgba(9, 9, 9, 0.8);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
 }
 
-.nav-logo {
-  height: 42px;
-  width: auto;
-}
-
+/* LUXURY POLISH: Liquid Metal Brand Text */
 .brand-name {
   font-size: 1.05rem;
-  color: #f6f6f6;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 30%, var(--primary-glow) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(227, 92, 58, 0.15);
+  letter-spacing: -0.5px;
 }
 
 .nav-actions {
   display: flex;
   gap: 12px;
+}
+
+/* TACTILE FEEDBACK: Buttons scale down on click */
+.nav-btn, .primary-btn {
+  transition: all 0.2s ease, transform 0.05s ease-out;
+}
+
+.nav-btn:active, .primary-btn:active {
+  transform: scale(0.96);
 }
 
 .nav-btn {
@@ -273,7 +138,6 @@ input[type="file"] {
   color: var(--text-main);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 .nav-btn:hover {
@@ -285,21 +149,14 @@ input[type="file"] {
   border-color: rgba(227, 92, 58, 0.3);
   background: linear-gradient(135deg, var(--primary-maroon), var(--primary-glow));
   box-shadow: 0 8px 24px rgba(227, 92, 58, 0.22);
+  color: #fff;
 }
 
+/* --- Hero Section --- */
 .hero {
   text-align: center;
   padding: 86px 10px 52px;
   position: relative;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 15%, rgba(227, 92, 58, 0.18), transparent 45%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .hero-kicker {
@@ -312,11 +169,12 @@ input[type="file"] {
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
-  line-height: 1.15;
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+  line-height: 1.1;
   margin-bottom: 12px;
   position: relative;
   z-index: 1;
+  text-shadow: 0 0 50px rgba(227, 92, 58, 0.2); 
 }
 
 .typewriter-word {
@@ -349,7 +207,7 @@ input[type="file"] {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 20px;
+  padding: 14px 24px;
   border-radius: 14px;
   border: none;
   background: linear-gradient(135deg, var(--primary-maroon), var(--primary-glow));
@@ -357,12 +215,12 @@ input[type="file"] {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 15px 38px rgba(227, 92, 58, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 1.05rem;
 }
 
 .primary-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 18px 48px rgba(227, 92, 58, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 50px rgba(227, 92, 58, 0.4);
 }
 
 .chevron-icon {
@@ -374,19 +232,20 @@ input[type="file"] {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 14px;
-  margin-top: 10px;
+  margin-top: 20px;
   position: relative;
   z-index: 1;
 }
 
 .pill-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 14px 16px;
   border-radius: 14px;
   display: flex;
   align-items: center;
   gap: 12px;
+  backdrop-filter: blur(5px);
 }
 
 .pill-icon {
@@ -402,13 +261,15 @@ input[type="file"] {
   font-size: 0.95rem;
 }
 
+/* --- Upload Section --- */
 .upload-section {
   margin-top: 36px;
   padding: 46px 26px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(17, 17, 17, 0.65));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(17, 17, 17, 0.8));
   border: 1px solid var(--border-color);
   border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
 }
 
 .section-heading {
@@ -418,7 +279,7 @@ input[type="file"] {
 
 .section-heading h2,
 .features-section h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   letter-spacing: -0.5px;
 }
 
@@ -444,7 +305,7 @@ input[type="file"] {
   border: 1px solid var(--border-color);
   padding: 22px;
   border-radius: 16px;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: all 0.2s ease, transform 0.05s ease-out;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -454,6 +315,11 @@ input[type="file"] {
 .upload-card:hover {
   border-color: rgba(227, 92, 58, 0.45);
   transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.upload-card:active {
+  transform: scale(0.98);
 }
 
 .upload-card h3 {
@@ -485,6 +351,23 @@ input[type="file"] {
   margin-top: 10px;
   color: var(--text-secondary);
   font-size: 0.95rem;
+}
+
+.file-input-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  background-color: var(--bg-hover);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  width: 100%;
+  gap: 10px;
 }
 
 .upload-card .file-input-label {
@@ -531,36 +414,64 @@ input[type="file"] {
   gap: 16px;
 }
 
+/* LUXURY POLISH: Glowing Gradient Borders */
 .feature-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background-clip: padding-box;
+  backdrop-filter: blur(10px);
+  border: 1px solid transparent; /* Hide standard border to let pseudo-element shine */
   border-radius: 16px;
-  padding: 20px;
+  padding: 24px;
   text-align: left;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: all 0.3s ease, transform 0.05s ease-out;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px; /* 1px larger */
+  z-index: -1;
+  border-radius: 17px; 
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 40%);
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
 }
 
 .feature-card:hover {
-  border-color: rgba(227, 92, 58, 0.4);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(180deg, var(--primary-glow), transparent 50%);
+  box-shadow: 0 0 20px rgba(227, 92, 58, 0.2);
+}
+
+.feature-card:active {
+  transform: scale(0.98);
 }
 
 .feature-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   background: rgba(227, 92, 58, 0.12);
   color: #f38059;
   display: grid;
   place-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .feature-card p {
   color: var(--text-secondary);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
+/* --- Footer --- */
 .footer {
   padding: 18px 28px;
   border-top: 1px solid var(--border-color);
@@ -573,19 +484,39 @@ input[type="file"] {
   gap: 10px;
 }
 
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.footer-logo {
-  height: 34px;
-  width: auto;
-}
-
 .footer-copy {
   font-size: 0.95rem;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 900px) {
+  .upload-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 720px) {
@@ -597,22 +528,10 @@ input[type="file"] {
   .hero {
     padding-top: 64px;
   }
-  .brand-name {
-    font-size: 1rem;
-  }
   .content-shell {
     padding: 26px 16px 72px;
   }
-}
-
-@media (max-width: 1100px) {
   .feature-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 700px) {
-  .feature-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 }

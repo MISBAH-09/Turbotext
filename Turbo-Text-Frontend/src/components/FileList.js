@@ -1,8 +1,7 @@
 import React from "react";
 
 const FileList = ({ files, onSelectFile, onRemoveFile, onClearAll }) => {
-  
-  // Empty State
+
   if (files.length === 0) {
     return (
       <div style={{ 
