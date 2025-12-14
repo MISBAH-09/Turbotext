@@ -2,6 +2,7 @@ $ErrorActionPreference = "Stop"
 
 # One-click starter for Windows PowerShell: creates venv, checks LanguageTool jar, runs uvicorn.
 
+
 function Get-Python {
     if ($env:PYTHON_PATH) {
         if (Test-Path $env:PYTHON_PATH) {

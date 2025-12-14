@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { isValidFile } from "../utils/fileValidation";
 
-const DragDropUploader = ({ onFilesAdded }) => {
+const DragDropUploader = ({ onFilesAdded, children }) => {
   const [dragging, setDragging] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef(null);
@@ -65,6 +65,7 @@ const DragDropUploader = ({ onFilesAdded }) => {
         overflow: "hidden"
       }}
     >
+        {children}
       {/* Decorative Background Icon */}
       <div style={{
         position: 'absolute',
