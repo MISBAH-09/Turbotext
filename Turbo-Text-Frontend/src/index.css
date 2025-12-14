@@ -1,0 +1,214 @@
+/* --- TurboText Design System --- */
+:root {
+  --bg-dark: #050505;          /* Deepest Black */
+  --bg-card: #121212;          /* Card Surface */
+  --bg-hover: #1e1e1e;         /* Hover State */
+  --primary-maroon: #9f1239;   /* Brand Maroon */
+  --primary-glow: #be123c;     /* Lighter Maroon for effects */
+  --text-main: #ffffff;        /* Pure White */
+  --text-secondary: #a3a3a3;   /* Muted Grey */
+  --border-color: #2a2a2a;     /* Subtle Borders */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.6;
+  /* Premium Ambient Background */
+  background-image: radial-gradient(circle at 50% -20%, #3f0816 0%, #050505 60%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Global Container */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Header Section & Animations --- */
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeIn 1s ease-out;
+}
+
+.logo-container {
+  position: relative;
+  display: inline-block;
+  /* Floating Animation */
+  animation: float 6s ease-in-out infinite; 
+}
+
+/* Logo Glow Effect - BIG Version */
+.logo-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px; /* Large Glow Size */
+  height: 250px;
+  background: var(--primary-maroon);
+  filter: blur(80px);
+  opacity: 0.25;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  /* Pulsing Glow Animation */
+  animation: pulse-glow 3s infinite alternate;
+}
+
+.logo {
+  height: 135px; /* EXTRA LARGE LOGO */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.tagline {
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  margin-top: -35px;
+ 
+}
+
+/* --- Layout Grid --- */
+.upload-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 50px;
+  margin-top: -20px;
+}
+
+@media (min-width: 900px) {
+  .upload-grid {
+    grid-template-columns: 1.8fr 1fr; /* Hero takes more space */
+  }
+}
+
+/* --- Card Styling & Slide Animations --- */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  /* Entry Animation */
+  opacity: 0; 
+  animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.card:hover {
+  border-color: #444;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transform: translateY(-5px);
+}
+
+.card-header {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Keyframe Definitions --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.2); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Utility Classes --- */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-input-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  background-color: var(--bg-hover);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  width: 100%;
+  gap: 10px;
+}
+
+.file-input-label:hover {
+  border-color: var(--primary-maroon);
+  color: #fff;
+  background-color: #2a2a2a;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
