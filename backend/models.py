@@ -41,6 +41,8 @@ class FileResult(BaseModel):
     stats: dict
     content: Optional[str] = None
     error: Optional[str] = None
+    content_id: Optional[str] = None
+    content_available: Optional[bool] = None
 
 
 class AnalyzeResponse(BaseModel):

@@ -7,7 +7,7 @@ import DocumentViewer from './DocumentViewer';
 import Logo from '../components/Logo';
 import Typewriter from 'typewriter-effect'; // Import Typewriter
 import AnalysisResults from '../components/AnalysisResults';
-import { analyzeFiles } from '../services/analyzeService';
+import { analyzeFiles, fetchFileContent } from '../services/analyzeService';
 import IssueEditor from '../components/IssueEditor';
 
 const quickHighlights = [
@@ -134,7 +134,7 @@ const Home = () => {
     }
   };
 
-  const handleOpenEditor = (fileResult) => {
+  const handleOpenEditor = async (fileResult) => {
     const existing = contentByName[fileResult.id];
     if (existing) {
       setEditorTarget({ ...fileResult, content: existing });
@@ -144,6 +144,18 @@ const Home = () => {
       setContentByName((prev) => ({ ...prev, [fileResult.id]: fileResult.content }));
       setEditorTarget({ ...fileResult, content: fileResult.content });
       return;
+    }
+    if (fileResult.content_id) {
+      try {
+        const payload = await fetchFileContent(fileResult.content_id);
+        const text = payload.content || "";
+        setContentByName((prev) => ({ ...prev, [fileResult.id]: text }));
+        setEditorTarget({ ...fileResult, content: text });
+        return;
+      } catch (err) {
+        console.error(err);
+        setAnalysisError(err.message || "Failed to load file content.");
+      }
     }
     const match = files.find((f) => f.name === fileResult.id && f.type === "text/plain");
     if (match) {

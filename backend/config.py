@@ -18,6 +18,8 @@ class Settings:
     max_files: int = int(os.environ.get("MAX_FILES", "1000"))
     max_file_bytes: int = int(os.environ.get("MAX_FILE_BYTES", str(5 * 1024 * 1024)))  # 5MB
     disable_grammar: bool = os.environ.get("DISABLE_GRAMMAR", "0") == "1"
+    # Cache up to this many decoded file contents for on-demand editor loads (avoids sending full text in bulk responses).
+    content_cache_items: int = int(os.environ.get("CONTENT_CACHE_ITEMS", "64"))
 
 
 def load_settings() -> Settings:

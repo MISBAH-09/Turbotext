@@ -1,9 +1,11 @@
 import asyncio
 import logging
 import os
+from collections import OrderedDict
 from dataclasses import replace
 from typing import List, Any
 from concurrent.futures import ProcessPoolExecutor
+from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -23,7 +25,29 @@ from backend.services.file_decode import decode_uploaded_file
 logger = logging.getLogger("backend")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
+
+class _ContentCache:
+    """Tiny LRU cache to keep decoded text for on-demand editor loads."""
+
+    def __init__(self, capacity: int):
+        self.capacity = max(1, capacity)
+        self._store: OrderedDict[str, str] = OrderedDict()
+
+    def put(self, key: str, value: str) -> None:
+        self._store[key] = value
+        self._store.move_to_end(key)
+        if len(self._store) > self.capacity:
+            self._store.popitem(last=False)
+
+    def get(self, key: str) -> str | None:
+        value = self._store.get(key)
+        if value is not None:
+            self._store.move_to_end(key)
+        return value
+
+
 settings: Settings = load_settings()
+content_cache = _ContentCache(settings.content_cache_items)
 process_workers = settings.process_workers or max(1, os.cpu_count() or 1)
 try:
     process_pool = ProcessPoolExecutor(max_workers=process_workers)
@@ -67,20 +91,40 @@ async def health() -> HealthResponse:
     return HealthResponse(details={"process_workers": process_pool_workers})
 
 
-async def _analyze_single(doc: dict, effective_settings: Settings) -> FileResult:
+async def _analyze_single(doc: dict, effective_settings: Settings, include_content: bool = True) -> FileResult:
     loop = asyncio.get_running_loop()
+    content_id = doc.get("content_id")
+    cached_available = content_cache.get(content_id) is not None if content_id else False
     try:
         result = await loop.run_in_executor(
             process_pool, process_document, doc["id"], doc["content"], effective_settings
         )
-        return FileResult(**result)
+        if not include_content:
+            result = {**result, "content": None}
+        return FileResult(
+            **result,
+            content_id=content_id,
+            content_available=include_content or cached_available,
+        )
     except Exception as exc:  # pragma: no cover - guardrail
         logger.exception("Failed to analyze %s", doc.get("id"))
-        return FileResult(id=doc.get("id", ""), tokens=[], issues=[], stats={}, error=str(exc))
+        return FileResult(
+            id=doc.get("id", ""),
+            tokens=[],
+            issues=[],
+            stats={},
+            error=str(exc),
+            content_id=content_id,
+            content_available=include_content or cached_available,
+        )
 
 
 @app.post("/analyze")
-async def analyze(request: Request, files: List[UploadFile] | None = File(default=None)) -> Any:
+async def analyze(
+    request: Request,
+    files: List[UploadFile] | None = File(default=None),
+    include_content: bool = False,
+) -> Any:
     # Multipart form-data path: treat as file uploads and return a simplified summary.
     if files:
         if len(files) > settings.max_files:
@@ -98,10 +142,15 @@ async def analyze(request: Request, files: List[UploadFile] | None = File(defaul
                     detail=f"File '{f.filename}' exceeds {settings.max_file_bytes} bytes",
                 )
             text, _ = decode_uploaded_file(f.filename, data)
-            documents.append({"id": f.filename or f"file{idx+1}", "content": text})
+            content_id = uuid4().hex
+            if not include_content:
+                content_cache.put(content_id, text)
+            documents.append({"id": f.filename or f"file{idx+1}", "content": text, "content_id": content_id})
 
         effective_settings = replace(settings)
-        results = await asyncio.gather(*[_analyze_single(doc, effective_settings) for doc in documents])
+        results = await asyncio.gather(
+            *[_analyze_single(doc, effective_settings, include_content) for doc in documents]
+        )
 
         formatted = []
         for res in results:
@@ -161,7 +210,7 @@ async def analyze(request: Request, files: List[UploadFile] | None = File(defaul
     )
 
     tasks = [
-        _analyze_single(doc.model_dump(), effective_settings) for doc in parsed.documents
+        _analyze_single(doc.model_dump(), effective_settings, include_content) for doc in parsed.documents
     ]
     results = await asyncio.gather(*tasks)
     return AnalyzeResponse(files=results)
@@ -171,6 +220,7 @@ async def analyze(request: Request, files: List[UploadFile] | None = File(defaul
 async def analyze_files(
     files: List[UploadFile] | None = File(default=None),
     file: UploadFile | None = File(default=None),
+    include_content: bool = False,
 ) -> AnalyzeResponse:
     incoming: List[UploadFile] = []
     if file is not None:
@@ -192,12 +242,23 @@ async def analyze_files(
                 detail=f"File '{f.filename}' exceeds {settings.max_file_bytes} bytes",
             )
         text, _ = decode_uploaded_file(f.filename, data)
-        documents.append({"id": f.filename or f"file{idx+1}", "content": text})
+        content_id = uuid4().hex
+        if not include_content:
+            content_cache.put(content_id, text)
+        documents.append({"id": f.filename or f"file{idx+1}", "content": text, "content_id": content_id})
 
     effective_settings = replace(settings)
-    tasks = [_analyze_single(doc, effective_settings) for doc in documents]
+    tasks = [_analyze_single(doc, effective_settings, include_content) for doc in documents]
     results = await asyncio.gather(*tasks)
     return AnalyzeResponse(files=results)
+
+
+@app.get("/file-content/{content_id}")
+async def get_file_content(content_id: str) -> dict:
+    cached = content_cache.get(content_id)
+    if cached is None:
+        raise HTTPException(status_code=404, detail="Content not found or expired")
+    return {"file_id": content_id, "content": cached}
 
 
 # Entrypoint for `uvicorn backend.app:app --reload`
