@@ -1,4 +1,4 @@
-export const allowedExtensions = ["txt", "doc", "docx"];
+export const allowedExtensions = ["txt", "doc", "docx", "pdf"];
 
 export const isValidFile = (file) => {
   const ext = file.name.split(".").pop().toLowerCase();

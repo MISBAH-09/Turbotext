@@ -22,7 +22,7 @@ const FileUploader = ({ onFilesSelected }) => {
     });
 
     if (invalidFound) {
-      setError("Invalid file type! Only .txt, .doc, .docx are allowed.");
+      setError("Invalid file type! Only .txt, .doc, .docx, .pdf are allowed.");
       setTimeout(() => setError(""), 3000);
     }
 
@@ -38,7 +38,7 @@ const FileUploader = ({ onFilesSelected }) => {
          <input 
             type="file" 
             multiple 
-            accept=".txt,.doc,.docx"
+            accept=".txt,.doc,.docx,.pdf"
             onChange={handleFileChange}
          />
       </label>

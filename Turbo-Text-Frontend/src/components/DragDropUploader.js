@@ -19,7 +19,7 @@ const DragDropUploader = ({ onFilesAdded }) => {
     });
 
     if (invalidFound) {
-      setError("Invalid file type! Only .txt, .doc, .docx are allowed.");
+      setError("Invalid file type! Only .txt, .doc, .docx, .pdf are allowed.");
       setTimeout(() => setError(""), 3000);
     }
 
