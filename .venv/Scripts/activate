@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="E:\Turbotext\.venv"
+VIRTUAL_ENV="D:\BTWITSME\SEMESTER 6\ParallelDistributedComputing\Project\TurboText\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

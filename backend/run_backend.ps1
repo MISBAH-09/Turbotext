@@ -4,11 +4,12 @@ $ErrorActionPreference = "Stop"
 
 
 function Get-Python {
-    if ($env:PYTHON_PATH) {
-        if (Test-Path $env:PYTHON_PATH) {
-            return $env:PYTHON_PATH
+    $explicit = $env:PYTHON_PATH
+    if (-not [string]::IsNullOrWhiteSpace($explicit)) {
+        if (Test-Path $explicit) {
+            return $explicit
         }
-        throw "PYTHON_PATH is set to '$env:PYTHON_PATH' but that file does not exist."
+        throw "PYTHON_PATH is set to '$explicit' but that file does not exist."
     }
 
     foreach ($cmd in @("py -3", "python3", "python")) {
@@ -24,7 +25,8 @@ function Get-Python {
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $ProjectRoot = Split-Path -Parent $ScriptDir
-$VenvDir = Join-Path $ScriptDir ".venv"
+# Use project-level venv (sibling to backend) so tooling paths stay stable.
+$VenvDir = Join-Path $ProjectRoot ".venv"
 $PythonCmd = Get-Python
 
 # Prefer bundled LanguageTool unless overridden by env; fall back if env path is invalid.

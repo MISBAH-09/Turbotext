@@ -8,7 +8,7 @@ class Document(BaseModel):
 
 
 class AnalyzeRequest(BaseModel):
-    documents: List[Document] = Field(..., min_items=1)
+    documents: List[Document] = Field(..., min_length=1)
     chunk_size: Optional[int] = Field(None, gt=256, lt=64_000)
     chunk_overlap: Optional[int] = Field(None, ge=0, lt=8_000)
     language: Optional[str] = None
